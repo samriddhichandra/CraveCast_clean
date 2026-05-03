@@ -1,0 +1,188 @@
+Project Overview
+
+CraveCast, also called Smart Recipe Generator, is a full-stack web application that helps users create, save, browse, and interact with recipes. The main idea is simple: users enter ingredients they already have, choose dietary preferences, and the app generates recipe ideas for them.
+
+The app uses Next.js for the frontend and backend API routes, MongoDB for storing users and recipes, Google OAuth for login, and OpenAI for AI-powered recipe generation, image generation, recipe tagging, and text-to-speech narration.
+
+Because AI services can fail due to quota or billing limits, the project also includes fallback logic. That means if OpenAI is unavailable, the app can still generate demo recipes and use placeholder food images so the user experience does not completely break.
+
+Problem It Solves
+
+Many people have ingredients at home but do not know what to cook with them. CraveCast solves this by allowing users to enter ingredients such as eggs, cheese, bread, tomato, or milk, and the app suggests recipes based on those ingredients.
+
+It also helps users discover recipes shared by others, like recipes, search recipes, and view detailed cooking instructions.
+
+Main Features
+
+The first feature is AI recipe generation. A user enters ingredients and dietary preferences, and the app sends this information to OpenAI. OpenAI returns structured recipe suggestions with names, ingredients, instructions, dietary preferences, and extra information like tips and serving suggestions.
+
+The second feature is recipe saving. Once a recipe is generated, the user can save it. Saved recipes are stored in MongoDB with the owner’s user ID, ingredients, instructions, image link, likes, comments, tags, and timestamps.
+
+The third feature is recipe browsing. On the home page, users can see recipes created by themselves and others. They can sort recipes by most recent or most popular.
+
+The fourth feature is search. Users can search recipes by name, ingredient, or keyword.
+
+The fifth feature is authentication. Users log in with Google using NextAuth. This allows the app to know who created a recipe, who liked a recipe, and which recipes belong to which user.
+
+The sixth feature is likes and popularity. Users can like recipes, and popular recipes can be sorted based on the number of likes.
+
+The seventh feature is recipe detail view. When a user clicks “See Recipe,” a modal opens showing full instructions, ingredients, dietary preferences, and additional information.
+
+The eighth feature is fallback handling. If OpenAI quota is exceeded, the app does not crash. Instead, it uses demo recipes and fallback images. This is important because real APIs can fail or have limits.
+
+Tech Stack
+
+The frontend is built using Next.js 14 and React 18. Next.js is used because it supports both frontend pages and backend API routes in the same project.
+
+The project uses the Pages Router, so pages are inside the src/pages folder. API endpoints are inside src/pages/api.
+
+The UI is styled with Tailwind CSS, which makes it easier to create responsive and modern layouts.
+
+The app uses Headless UI for accessible UI components like dialogs and buttons.
+
+For the database, the project uses MongoDB with Mongoose. MongoDB stores users, recipes, likes, comments, tags, and AI logs.
+
+For authentication, the project uses NextAuth v4 with Google OAuth.
+
+For AI features, the app uses the OpenAI SDK.
+
+For storage, the project can use Supabase Storage to upload generated images or audio files.
+
+Folder Structure Explanation
+
+The src/pages folder contains the main pages of the app. For example, Home.tsx is the main browsing page, CreateRecipe.tsx is where users generate recipes, and Profile.tsx shows user profile and saved recipes.
+
+The src/pages/api folder contains backend endpoints. These are server-side API routes. For example, generate-recipes.ts handles recipe generation, save-recipes.ts saves recipes to MongoDB, get-recipes.ts fetches recipes for the home page, and auth/[...nextauth].ts handles authentication.
+
+The src/components folder contains reusable UI components. For example, recipe cards, dialogs, dialogs, headers, buttons, and profile components are stored here.
+
+The src/models folder contains Mongoose models. For example, recipe.ts defines the recipe schema, including fields like name, ingredients, instructions, image link, owner, likes, comments, and tags.
+
+The src/lib folder contains helper logic for external services. For example, openai.ts handles recipe generation, image generation, validation, tagging, and TTS. mongodb.ts handles database connection. storage.ts handles file uploads.
+
+The src/types folder defines TypeScript types used across the project.
+
+User Flow
+
+A typical user flow starts when the user opens the app and logs in using Google.
+
+After login, the user goes to the Create Recipe page. They add ingredients like bread, cheese, tomato, milk, or eggs. They can also choose dietary preferences.
+
+When the user clicks generate, the frontend sends a request to:
+
+/api/generate-recipes
+
+The backend builds a prompt and sends it to OpenAI. If OpenAI is available, it returns AI-generated recipes. If OpenAI quota is unavailable, the app uses demo fallback recipes.
+
+The user selects one or more recipes and saves them. The frontend sends the selected recipe data to:
+
+/api/save-recipes
+
+The save API tries to generate an image. If image generation fails, it uses a fallback food image. Then it stores the recipe in MongoDB.
+
+After saving, the user can go to the Home or Profile page and see the saved recipe card. Clicking “See Recipe” opens the full recipe modal.
+
+Database Design
+
+The main database model is the Recipe model.
+
+Each recipe has an owner, which connects the recipe to a user. It has a name, ingredients, instructions, dietary preferences, additional information, image link, likes, comments, tags, and optional audio.
+
+The ingredients are stored as an array of objects. Each ingredient has a name and quantity. For example:
+
+{
+  "name": "Bread",
+  "quantity": "as needed"
+}
+
+The likedBy field stores an array of user IDs. This helps track how many users liked the recipe.
+
+The comments field stores user comments.
+
+The tags field stores recipe tags for search and discovery.
+
+AI Integration
+
+OpenAI is used in several places.
+
+For recipe generation, the app sends ingredients and dietary preferences to OpenAI and receives recipe suggestions.
+
+For ingredient validation, OpenAI can check whether an entered ingredient is valid.
+
+For image generation, OpenAI can generate food images for recipes.
+
+For tags, OpenAI can generate keywords for each recipe.
+
+For text-to-speech, OpenAI can create recipe narration audio.
+
+However, OpenAI APIs depend on quota and billing. In this project, if OpenAI returns an error like 429 insufficient_quota, the app handles it gracefully. Instead of crashing, it uses fallback demo recipes and placeholder images.
+
+This makes the project more reliable during demos.
+
+API Routes
+
+The route /api/generate-recipes handles recipe generation. It accepts ingredients and dietary preferences, calls the OpenAI helper, and returns generated or fallback recipes.
+
+The route /api/save-recipes saves selected recipes. It also handles image generation, fallback images, image upload, and MongoDB insertion.
+
+The route /api/get-recipes fetches recipes for the Home page. It supports pagination and sorting by recent or popular.
+
+The route /api/search-recipes allows users to search recipes.
+
+The route /api/like-recipe handles liking and unliking recipes.
+
+The route /api/profile fetches user profile information and user-specific recipes.
+
+The route /api/auth/[...nextauth] handles Google login through NextAuth.
+
+Error Handling and Fallbacks
+
+A strong part of the project is fallback handling.
+
+If OpenAI recipe generation fails, the app uses demo recipes.
+
+If OpenAI image generation fails, the app uses a public food image URL.
+
+If Supabase image upload fails, the app still saves the recipe with a direct image URL.
+
+If tag generation fails, the app skips tags instead of failing the save process.
+
+This is important because it prevents one failed service from breaking the whole app.
+
+What Happens When OpenAI Quota Is Exceeded
+
+During development, OpenAI quota may be unavailable. In that case, the terminal may show messages like:
+
+OpenAI recipe generation unavailable. Using demo recipes.
+
+or:
+
+OpenAI image generation unavailable. Using placeholder images.
+
+This does not mean the whole app is broken. It means the fallback system is working.
+
+The recipe can still be generated, saved, and displayed.
+
+Presentation Script
+
+You can say this:
+
+“CraveCast is a smart recipe generator built with Next.js, TypeScript, MongoDB, NextAuth, and OpenAI. The goal of the project is to help users decide what to cook based on the ingredients they already have.
+
+A user logs in with Google, enters ingredients, and chooses dietary preferences. The app sends this data to an API route, which uses OpenAI to generate recipes. Each recipe includes ingredients, instructions, dietary preferences, and extra cooking tips.
+
+Users can save recipes, and the saved recipes are stored in MongoDB. The home page allows users to browse recipes, search recipes, sort by popularity or recency, and like recipes.
+
+The app also includes fallback logic. If OpenAI quota is exceeded or image generation fails, the app does not crash. Instead, it creates demo recipes and uses fallback food images. This makes the project reliable during development and demos.
+
+The backend is implemented using Next.js API routes, and the database schema is managed with Mongoose. Authentication is handled using NextAuth with Google OAuth.”
+
+Good Points to Highlight
+
+You should highlight that this is not just a frontend project. It is a full-stack app with authentication, database storage, API routes, AI integration, search, likes, and error handling.
+
+Also highlight that you handled real-world problems like API quota limits and storage failures using fallback logic.
+
+A strong ending line:
+
+“The main strength of this project is that it combines AI generation with a real recipe-sharing platform, while still being robust enough to work even when external AI services are unavailable.”
