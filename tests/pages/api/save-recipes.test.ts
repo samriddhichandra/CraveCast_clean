@@ -99,7 +99,7 @@ describe('Saving recipes', () => {
         }
         await saveRecipes(updatedreq, res)
         expect(res.statusCode).toBe(200)
-        expect(res._getJSONData()).toEqual({ status: 'Saved Recipes and generated the Images!' })
+        expect(res._getJSONData()).toEqual({ status: 'Saved recipes successfully', count: 2 })
     })
 
     it('will respond with error if POST call is rejected', async () => {

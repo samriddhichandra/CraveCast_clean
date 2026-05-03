@@ -1,19 +1,14 @@
-import { signIn } from "next-auth/react";
 import Landing from "../../../src/components/Hero_Sections/Landing";
 import { render, screen, fireEvent } from '@testing-library/react'
 
-
-jest.mock("next-auth/react")
-
 it('The Landing section renders', () => {
-    const { container } = render(<Landing />)
+    const { container } = render(<Landing onGetStarted={() => { }} />)
     expect(container).toMatchSnapshot()
 })
 
-it('Shall be the user to sign in', () => {
-    const mockSignIn = jest.fn();
-    (signIn as jest.Mock).mockImplementationOnce(mockSignIn);
-    const { container } = render(<Landing />)
+it('Calls onGetStarted when clicking Get started', () => {
+    const onGetStarted = jest.fn();
+    render(<Landing onGetStarted={onGetStarted} />)
     fireEvent.click(screen.getByText('Get started'));
-    expect(mockSignIn).toHaveBeenCalledTimes(1)
+    expect(onGetStarted).toHaveBeenCalledTimes(1)
 })

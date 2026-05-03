@@ -34,26 +34,20 @@ exports[`The Layout renders the hero if the user is not authenticated 1`] = `
         <div
           class="flex lg:flex-1"
         >
-          <a
+          <div
             class="-m-1.5 p-1.5"
-            href="#"
           >
-            <span
-              class="sr-only"
+            <div
+              class="text-sm font-extrabold tracking-tight text-slate-900"
+            >
+              CraveCast
+            </div>
+            <div
+              class="text-xs text-slate-600"
             >
               Smart Recipe Generator
-            </span>
-            <img
-              alt="Smart Recipe Generator Logo"
-              data-nimg="1"
-              decoding="async"
-              height="75"
-              loading="lazy"
-              src="/logo.svg"
-              style="color: transparent;"
-              width="75"
-            />
-          </a>
+            </div>
+          </div>
         </div>
         <div
           class="flex lg:hidden"
@@ -83,25 +77,6 @@ exports[`The Layout renders the hero if the user is not authenticated 1`] = `
                 stroke-linejoin="round"
               />
             </svg>
-          </button>
-        </div>
-        <div
-          class="hidden lg:flex lg:gap-x-12"
-        >
-          <button
-            class="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Product
-          </button>
-          <button
-            class="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Features
-          </button>
-          <button
-            class="text-sm font-semibold leading-6 text-gray-900"
-          >
-            About
           </button>
         </div>
         <div
@@ -138,31 +113,6 @@ exports[`The Layout renders the hero if the user is not authenticated 1`] = `
       <div
         class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56"
       >
-        <div
-          class="hidden sm:mb-8 sm:flex sm:justify-center"
-        >
-          <div
-            class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20"
-          >
-            Discover our new AI-powered recipe generator.
-             
-            <a
-              class="font-semibold text-brand-600"
-              href="https://github.com/Dereje1/smart-recipe-generator"
-            >
-              <span
-                aria-hidden="true"
-                class="absolute inset-0"
-              />
-              Learn more 
-              <span
-                aria-hidden="true"
-              >
-                →
-              </span>
-            </a>
-          </div>
-        </div>
         <div
           class="animate-fadeInUp mx-auto flex max-w-4xl flex-col items-center gap-10 py-10 md:flex-row md:py-20"
         >
