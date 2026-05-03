@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { ClockIcon, FireIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 import SearchBar from '../components/SearchBar';
 import ViewRecipes from '../components/Recipe_Display/ViewRecipes';
 import FloatingActionButtons from '../components/FloatingActionButtons';
@@ -279,12 +280,12 @@ const Home = () => {
                                 >
                                     Clear search
                                 </button>
-                                <a
+                                <Link
                                     href="/CreateRecipe"
                                     className="inline-flex items-center justify-center rounded-xl bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2"
                                 >
                                     Create a recipe
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     ) : (
