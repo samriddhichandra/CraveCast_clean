@@ -1,0 +1,392 @@
+import OpenAI from 'openai';
+import { Ingredient, DietaryPreference, Recipe, ExtendedRecipe } from '../types/index';
+import aiGenerated from '../models/aigenerated';
+import { connectDB } from '../lib/mongodb';
+import { ImagesResponse } from 'openai/resources';
+import recipeModel from '../models/recipe';
+import {
+    getRecipeGenerationPrompt,
+    getImageGenerationPrompt,
+    getIngredientValidationPrompt,
+    getRecipeNarrationPrompt,
+    getRecipeTaggingPrompt,
+    getChatAssistantSystemPrompt
+} from './prompts';
+
+// Initialize OpenAI client with API key from environment
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+export const OPENAI_TEXT_MODEL = process.env.OPENAI_TEXT_MODEL || 'gpt-5-mini';
+
+const isOpenAIQuotaError = (error: unknown) => {
+    const err = error as any;
+    const status = err?.status ?? err?.response?.status;
+    const code = err?.code ?? err?.error?.code;
+    return (
+        status === 429 ||
+        code === 'insufficient_quota' ||
+        code === 'rate_limit_exceeded' ||
+        // Common when the account/project has exhausted credits or hit a billing cap.
+        code === 'billing_hard_limit_reached'
+    );
+};
+
+// Save OpenAI responses in the database for logging/tracking
+type SaveOpenaiResponsesType = {
+    userId: string;
+    prompt: string;
+    response: any;
+    model?: string;
+};
+const saveOpenaiResponses = async ({ userId, prompt, response, model }: SaveOpenaiResponsesType) => {
+    try {
+        await connectDB();
+        const { _id } = await aiGenerated.create({
+            userId,
+            prompt,
+            response,
+            model,
+        });
+        return _id;
+    } catch (error) {
+        console.error('Failed to save response to db:', error);
+        return null;
+    }
+};
+
+type ResponseType = {
+    recipes: string | null;
+    openaiPromptId: string;
+};
+
+// Generate recipes by sending a chat completion request to OpenAI using ingredients and dietary preferences
+export const generateRecipe = async (ingredients: Ingredient[], dietaryPreferences: DietaryPreference[], userId: string): Promise<ResponseType> => {
+    try {
+        const prompt = getRecipeGenerationPrompt(ingredients, dietaryPreferences);
+        const model = OPENAI_TEXT_MODEL;
+        const response = await openai.chat.completions.create({
+            model,
+            reasoning_effort: 'low',
+            messages: [{
+                role: 'user',
+                content: prompt,
+            }],
+            max_completion_tokens: 4000,
+        });
+        const _id = await saveOpenaiResponses({ userId, prompt, response, model });
+        return { recipes: response.choices[0].message?.content, openaiPromptId: _id || 'null-prompt-id' };
+    } catch (error) {
+        if (isOpenAIQuotaError(error)) {
+            console.warn('OpenAI recipe generation unavailable (quota/rate limit). Using demo recipes.');
+            const ingredientNames = ingredients.map((i) => i.name).filter(Boolean);
+            const dietNames = dietaryPreferences.map((d) => (typeof d === 'string' ? d : (d as any).name)).filter(Boolean);
+            const baseName = ingredientNames.slice(0, 3).join(', ') || 'your ingredients';
+            const dietSuffix = dietNames.length ? ` • ${dietNames.join(', ')}` : '';
+
+            const demoRecipes = [
+                {
+                    name: `Quick ${baseName} Bowl`,
+                    ingredients: ingredientNames.map((n) => ({ name: n, quantity: 'as needed' })),
+                    instructions: [
+                        'Prep and chop ingredients.',
+                        'Sauté aromatics, add main ingredients, season to taste.',
+                        'Serve warm and garnish with herbs/lemon.',
+                    ],
+                    dietaryPreference: dietNames.length ? dietNames : ['No Preference'],
+                    additionalInformation: {
+                        tips: 'Taste as you go and adjust seasoning.',
+                        variations: 'Swap proteins/veggies based on what you have.',
+                        servingSuggestions: 'Serve with rice, naan, or a fresh salad.',
+                        nutritionalInformation: 'Estimated: balanced macros depending on ingredients.',
+                    },
+                    tags: [],
+                },
+                {
+                    name: `Zesty ${baseName} Skillet`,
+                    ingredients: ingredientNames.map((n) => ({ name: n, quantity: 'as needed' })),
+                    instructions: [
+                        'Heat pan, add oil/butter, toast spices lightly.',
+                        'Add ingredients, cook until tender.',
+                        'Finish with citrus and a drizzle of olive oil.',
+                    ],
+                    dietaryPreference: dietNames.length ? dietNames : ['No Preference'],
+                    additionalInformation: {
+                        tips: 'High heat for quick browning.',
+                        variations: 'Add chili flakes for heat.',
+                        servingSuggestions: 'Top with yogurt or tahini sauce.',
+                        nutritionalInformation: 'Estimated: depends on portion sizes.',
+                    },
+                    tags: [],
+                },
+                {
+                    name: `Cozy ${baseName} Soup`,
+                    ingredients: ingredientNames.map((n) => ({ name: n, quantity: 'as needed' })),
+                    instructions: [
+                        'Simmer ingredients in stock/water.',
+                        'Blend partially for texture.',
+                        'Season and serve with bread.',
+                    ],
+                    dietaryPreference: dietNames.length ? dietNames : ['No Preference'],
+                    additionalInformation: {
+                        tips: 'Let it simmer to deepen flavor.',
+                        variations: 'Add beans/lentils for protein.',
+                        servingSuggestions: 'Serve with toasted bread.',
+                        nutritionalInformation: 'Estimated: hearty and filling.',
+                    },
+                    tags: [],
+                },
+            ];
+
+            return {
+                recipes: JSON.stringify(demoRecipes),
+                openaiPromptId: 'demo-prompt-id',
+            };
+        }
+
+        console.error('Failed to generate recipe:', error);
+        throw new Error('Failed to generate recipe');
+    }
+};
+
+// Generate an image using DALL-E by sending an image generation prompt to OpenAI
+const generateImage = (prompt: string, model: string): Promise<ImagesResponse> => {
+    try {
+        const response = openai.images.generate({
+            model,
+            prompt,
+            n: 1,
+            size: '1024x1024',
+        });
+        return response;
+    } catch (error) {
+        throw new Error('Failed to generate image');
+    }
+};
+
+const OPENAI_IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
+
+// Generate images for an array of recipes and return image links paired with recipe names
+type ImageRecipeInput = Pick<Recipe, 'name' | 'ingredients'>;
+export const generateImages = async (recipes: ImageRecipeInput[], userId: string) => {
+    try {
+        const model = OPENAI_IMAGE_MODEL;
+        const imagePromises: Promise<ImagesResponse>[] = recipes.map(recipe =>
+            generateImage(getImageGenerationPrompt(recipe.name, recipe.ingredients), model)
+        );
+        const images = await Promise.all(imagePromises);
+        const imageLogSummary = images.map((imageResponse) => ({
+            created: imageResponse.created,
+            hasUrl: Boolean(imageResponse?.data?.[0]?.url),
+            hasB64Json: Boolean(imageResponse?.data?.[0]?.b64_json),
+        }));
+        await saveOpenaiResponses({
+            userId,
+            prompt: `Image generation for recipe names ${recipes.map(r => r.name).join(' ,')} (note: not exact prompt)`,
+            response: imageLogSummary,
+            model
+        });
+        // Validate and map images safely
+        const imagesWithNames = images.map((imageResponse, idx) => {
+            const recipeName = recipes[idx].name;
+            const imageData = imageResponse?.data?.[0];
+            const url = imageData?.url;
+            const b64Json = imageData?.b64_json;
+
+            if (!b64Json && !url) {
+                throw new Error(`Image generation failed for recipe: ${recipeName}`);
+            }
+
+            return {
+                imgLink: b64Json ? `data:image/png;base64,${b64Json}` : url as string,
+                name: recipeName,
+            };
+        });
+        return imagesWithNames;
+    } catch (error) {
+        if (isOpenAIQuotaError(error)) {
+            console.warn('OpenAI image generation unavailable (quota/rate limit). Using placeholder images.');
+            // 1x1 transparent png (small) as a safe placeholder that can still be uploaded.
+            const transparentPng =
+                'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
+            return recipes.map((r) => ({ imgLink: transparentPng, name: r.name }));
+        }
+        console.error('Error generating image:', error);
+        throw new Error('Failed to generate image');
+    }
+};
+
+// Validate an ingredient name by sending a prompt to OpenAI and returning its response
+export const validateIngredient = async (ingredientName: string, userId: string): Promise<string | null> => {
+    try {
+        const prompt = getIngredientValidationPrompt(ingredientName);
+        const model = OPENAI_TEXT_MODEL;
+        const response = await openai.chat.completions.create({
+            model,
+            reasoning_effort: 'low',
+            messages: [{
+                role: 'user',
+                content: prompt,
+            }],
+            max_completion_tokens: 800,
+        });
+        await saveOpenaiResponses({ userId, prompt, response, model });
+        return response.choices[0].message?.content;
+    } catch (error) {
+        // Graceful fallback: if OpenAI quota/rate-limit is hit, don't fail the whole UX.
+        // Return a sentinel JSON payload so the API route can still proceed.
+        if (isOpenAIQuotaError(error)) {
+            console.warn('OpenAI validation unavailable (quota/rate limit). Skipping validation.');
+            return JSON.stringify({
+                isValid: true,
+                possibleVariations: [],
+                skipped: true,
+            });
+        }
+
+        console.error('Failed to validate ingredient:', error);
+        throw new Error('Failed to validate ingredient');
+    }
+};
+
+// Retrieve narrated text for a recipe by sending a narration prompt to OpenAI
+const getRecipeNarration = async (recipe: ExtendedRecipe, userId: string): Promise<string | null> => {
+    try {
+        const prompt = getRecipeNarrationPrompt(recipe);
+        console.info('Getting recipe narration text from OpenAI...');
+        const model = OPENAI_TEXT_MODEL;
+        const response = await openai.chat.completions.create({
+            model,
+            reasoning_effort: 'low',
+            messages: [{
+                role: 'user',
+                content: prompt,
+            }],
+            max_completion_tokens: 1500,
+        });
+        const _id = await saveOpenaiResponses({ userId, prompt, response, model });
+        return response.choices[0].message?.content;
+    } catch (error) {
+        console.error('Failed to generate recipe narration:', error);
+        throw new Error('Failed to generate recipe narration');
+    }
+};
+
+// Convert narrated text to speech (TTS) using OpenAI audio API and return an audio buffer
+export const getTTS = async (recipe: ExtendedRecipe, userId: string): Promise<Buffer> => {
+    try {
+        const text = await getRecipeNarration(recipe, userId);
+        if (!text) throw new Error('Unable to get text for recipe narration');
+        // Randomly select a voice type from available options
+        type voiceTypes = 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer';
+        const voiceChoices: voiceTypes[] = ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer'];
+        const voice = voiceChoices[Math.floor(Math.random() * voiceChoices.length)];
+        console.info('Getting recipe narration audio from OpenAI...');
+        const model = 'tts-1';
+        const mp3 = await openai.audio.speech.create({
+            model,
+            voice,
+            input: text,
+        });
+        const buffer = Buffer.from(await mp3.arrayBuffer());
+        await saveOpenaiResponses({ userId, prompt: text, response: mp3, model });
+        return buffer;
+    } catch (error) {
+        console.error('Failed to generate tts:', error);
+        throw new Error('Failed to generate tts');
+    }
+};
+
+// Generate tags for a recipe by sending a tagging prompt to OpenAI and updating the recipe document in the database
+export const generateRecipeTags = async (recipe: ExtendedRecipe, userId: string): Promise<undefined> => {
+    try {
+        const prompt = getRecipeTaggingPrompt(recipe);
+        const model = OPENAI_TEXT_MODEL;
+        const response = await openai.chat.completions.create({
+            model,
+            reasoning_effort: 'low',
+            messages: [{
+                role: 'user',
+                content: prompt,
+            }],
+            max_completion_tokens: 1500,
+        });
+        await saveOpenaiResponses({ userId, prompt, response, model });
+        const [tagsObject] = response.choices;
+        const rawTags = tagsObject.message?.content?.trim();
+        let tagsArray: string[] = [];
+        if (rawTags) {
+            try {
+                tagsArray = JSON.parse(rawTags);
+                if (!Array.isArray(tagsArray) || tagsArray.some(tag => typeof tag !== 'string')) {
+                    throw new Error('Invalid JSON structure: Expected an array of strings.');
+                }
+            } catch (jsonError) {
+                console.warn('Skipping tag generation due to malformed JSON from OpenAI.');
+                return;
+            }
+        }
+        if (tagsArray.length) {
+            const tags = tagsArray.map((tag: string) => ({ tag: tag.toLowerCase() }));
+            const update = { $set: { tags } };
+            console.info(`Adding tags -> ${tagsArray} for new recipe -> ${recipe.name} from OpenAI api`);
+            await recipeModel.findByIdAndUpdate(recipe._id, update);
+        }
+        return;
+    } catch (error) {
+        const err = error as any;
+        const status = typeof err?.status === 'number' ? err.status : undefined;
+        const code = typeof err?.code === 'string' ? err.code : undefined;
+
+        // Tag generation is best-effort; don't surface rate-limit/quota issues as hard errors.
+        if (status === 429 || code === 'insufficient_quota') {
+            console.warn('Skipping tag generation (rate limit / quota).');
+            return;
+        }
+
+        console.error('Failed to generate tags for the recipe:', error);
+        throw new Error(`Failed to generate tags for the recipe --> ${error}`);
+    }
+};
+
+// Generate a chat response by sending a message to OpenAI and returning the assistant's reply
+export const generateChatResponse = async (
+    message: string,
+    recipe: ExtendedRecipe,
+    history: any[],
+    userId: string
+): Promise<{ reply: string; totalTokens: number }> => {
+    try {
+        const model = OPENAI_TEXT_MODEL;
+        const messages = [
+            { role: 'system', content: getChatAssistantSystemPrompt(recipe) },
+            ...history,
+            { role: 'user', content: message },
+        ];
+
+        const response = await openai.chat.completions.create({
+            model,
+            reasoning_effort: 'low',
+            messages,
+            max_completion_tokens: 1000,
+        });
+
+        const reply = response.choices?.[0]?.message?.content ?? 'Sorry, I had trouble responding.';
+        const totalTokens = response.usage?.total_tokens ?? 0;
+
+        // Save to DB only on first message
+        if (history.length === 1) {
+            await saveOpenaiResponses({
+                userId,
+                prompt: `Chat session started for recipe: ${recipe.name}, first message: ${message}`,
+                response,
+                model,
+            });
+        }
+
+        return { reply, totalTokens };
+    } catch (error) {
+        console.error('Failed to generate chat response:', error);
+        return { reply: 'Sorry, I had trouble responding.', totalTokens: 0 };
+    }
+};

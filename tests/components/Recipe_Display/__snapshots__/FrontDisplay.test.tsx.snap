@@ -1,0 +1,219 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The single front facing display shall render 1`] = `
+<div>
+  <div
+    class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-100/40 focus-within:ring-2 focus-within:ring-emerald-400 focus-within:ring-offset-2 flex flex-col h-full animate-fadeInUp"
+  >
+    <div
+      class="relative h-44 w-full bg-gradient-to-br from-brand-100 to-orange-50"
+    >
+      <img
+        alt="Recipe_1_name"
+        class="transition duration-300 group-hover:scale-[1.03]"
+        data-nimg="fill"
+        decoding="async"
+        fetchpriority="high"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        src="/_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=3840&q=75"
+        srcset="/_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=256&q=75 256w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=384&q=75 384w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=3840&q=75 3840w"
+        style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; object-fit: cover; color: transparent;"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-black/0"
+      />
+      <div
+        class="absolute left-3 top-3 flex flex-wrap gap-2"
+      >
+        <span
+          class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-bold text-slate-800 shadow-sm backdrop-blur"
+        >
+          Recipe_1_preference_1
+        </span>
+        <span
+          class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-bold text-slate-800 shadow-sm backdrop-blur"
+        >
+          Recipe_1_preference_2
+        </span>
+      </div>
+    </div>
+    <div
+      class="flex flex-1 flex-col p-4"
+    >
+      <h3
+        class="text-base font-extrabold tracking-tight text-slate-900"
+      >
+        Recipe_1_name
+      </h3>
+      <p
+        class="mt-1 text-xs leading-5 text-slate-600"
+      >
+        Recipe_1_nutritionalInformation
+      </p>
+      <div
+        class="mt-4 flex items-center justify-between gap-3"
+      >
+        <button
+          class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2"
+          data-headlessui-state=""
+          type="button"
+        >
+          See Recipe
+          <svg
+            aria-hidden="true"
+            class="ml-2 h-5 w-5"
+            data-slot="icon"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <button
+          aria-label="Like recipe"
+          class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+          data-headlessui-state=""
+          data-testid="like_button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="block h-6 w-6 text-brand-500"
+            data-slot="icon"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span
+            class="tabular-nums"
+          >
+            1
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`The single front facing display shall render for a loading recipe 1`] = `
+<div>
+  <div
+    class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-100/40 focus-within:ring-2 focus-within:ring-emerald-400 focus-within:ring-offset-2 flex flex-col h-full animate-fadeInUp"
+  >
+    <div
+      class="relative h-44 w-full bg-gradient-to-br from-brand-100 to-orange-50"
+    >
+      <img
+        alt="Recipe_1_name"
+        class="transition duration-300 group-hover:scale-[1.03]"
+        data-nimg="fill"
+        decoding="async"
+        fetchpriority="high"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        src="/_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=3840&q=75"
+        srcset="/_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=256&q=75 256w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=384&q=75 384w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=3840&q=75 3840w"
+        style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; object-fit: cover; color: transparent;"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-black/0"
+      />
+      <div
+        class="absolute left-3 top-3 flex flex-wrap gap-2"
+      >
+        <span
+          class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-bold text-slate-800 shadow-sm backdrop-blur"
+        >
+          Recipe_1_preference_1
+        </span>
+        <span
+          class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-bold text-slate-800 shadow-sm backdrop-blur"
+        >
+          Recipe_1_preference_2
+        </span>
+      </div>
+    </div>
+    <div
+      class="flex flex-1 flex-col p-4"
+    >
+      <h3
+        class="text-base font-extrabold tracking-tight text-slate-900"
+      >
+        Recipe_1_name
+      </h3>
+      <p
+        class="mt-1 text-xs leading-5 text-slate-600"
+      >
+        Recipe_1_nutritionalInformation
+      </p>
+      <div
+        class="mt-4 flex items-center justify-between gap-3"
+      >
+        <button
+          class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2"
+          data-headlessui-state=""
+          type="button"
+        >
+          See Recipe
+          <svg
+            aria-hidden="true"
+            class="ml-2 h-5 w-5"
+            data-slot="icon"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <button
+          aria-label="Like recipe"
+          class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+          data-headlessui-state=""
+          data-testid="like_button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="block h-6 w-6 text-brand-500"
+            data-slot="icon"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span
+            class="tabular-nums"
+          >
+            1
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

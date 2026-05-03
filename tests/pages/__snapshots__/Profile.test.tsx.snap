@@ -1,0 +1,214 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The Profile component shall render for own recipes 1`] = `
+<div>
+  <div
+    class="flex flex-col min-h-screen items-center"
+  >
+    <div
+      class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow mt-5"
+    >
+      <div
+        class="flex justify-end"
+      />
+      <div
+        class="flex flex-col items-center pb-10 px-4 pt-4"
+      >
+        <img
+          alt="profile-mockuser"
+          class="w-24 h-24 mb-3 rounded-full shadow-lg"
+          data-nimg="1"
+          decoding="async"
+          height="75"
+          loading="lazy"
+          src="/_next/image?url=https%3A%2F%2Fwww.mockimage&w=256&q=75"
+          srcset="/_next/image?url=https%3A%2F%2Fwww.mockimage&w=96&q=75 1x, /_next/image?url=https%3A%2F%2Fwww.mockimage&w=256&q=75 2x"
+          style="color: transparent;"
+          width="75"
+        />
+        <h5
+          class="mb-1 text-xl font-medium text-gray-900 dark:text-white"
+        >
+          mockuser
+        </h5>
+        <span
+          class="text-sm text-gray-500 dark:text-gray-400"
+        >
+          mockEmail
+        </span>
+        <div
+          class="grid grid-cols-3 gap-4 text-center mt-2"
+        >
+          <div>
+            <div
+              class="text-lg font-medium text-black"
+            >
+              1
+            </div>
+            <button
+              class="bg-white rounded-md text-rose-700 font-bold"
+              data-headlessui-state=""
+              type="button"
+            >
+              Recipes Created
+            </button>
+          </div>
+          <div>
+            <div
+              class="text-lg font-medium text-black"
+            >
+              1
+            </div>
+            <button
+              class="bg-white rounded-md text-black hover:text-brand-500 hover:underline"
+              data-headlessui-state=""
+              type="button"
+            >
+              Votes Received
+            </button>
+          </div>
+          <div>
+            <div
+              class="text-lg font-medium text-black"
+            >
+              1
+            </div>
+            <button
+              class="bg-white rounded-md text-black hover:text-brand-500 hover:underline"
+              data-headlessui-state=""
+              type="button"
+            >
+              Favorites
+            </button>
+          </div>
+        </div>
+        <div
+          class="w-full mt-4"
+        >
+          <div
+            class="text-sm text-gray-600 dark:text-gray-400 text-center"
+          >
+            AI Usage: 
+            40
+            %
+          </div>
+          <div
+            class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700"
+          >
+            <div
+              class="bg-brand-500 h-2.5 rounded-full"
+              style="width: 40%;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
+      <div
+        class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-100/40 focus-within:ring-2 focus-within:ring-emerald-400 focus-within:ring-offset-2 flex flex-col h-full animate-fadeInUp"
+      >
+        <div
+          class="relative h-44 w-full bg-gradient-to-br from-brand-100 to-orange-50"
+        >
+          <img
+            alt="Recipe_1_name"
+            class="transition duration-300 group-hover:scale-[1.03]"
+            data-nimg="fill"
+            decoding="async"
+            fetchpriority="high"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            src="/_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=3840&q=75"
+            srcset="/_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=256&q=75 256w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=384&q=75 384w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fexample.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fpublic-bucket%2Fimages%2FRecipe_1.png&w=3840&q=75 3840w"
+            style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; object-fit: cover; color: transparent;"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-black/0"
+          />
+          <div
+            class="absolute left-3 top-3 flex flex-wrap gap-2"
+          >
+            <span
+              class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-bold text-slate-800 shadow-sm backdrop-blur"
+            >
+              Recipe_1_preference_1
+            </span>
+            <span
+              class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-bold text-slate-800 shadow-sm backdrop-blur"
+            >
+              Recipe_1_preference_2
+            </span>
+          </div>
+        </div>
+        <div
+          class="flex flex-1 flex-col p-4"
+        >
+          <h3
+            class="text-base font-extrabold tracking-tight text-slate-900"
+          >
+            Recipe_1_name
+          </h3>
+          <p
+            class="mt-1 text-xs leading-5 text-slate-600"
+          >
+            Recipe_1_nutritionalInformation
+          </p>
+          <div
+            class="mt-4 flex items-center justify-between gap-3"
+          >
+            <button
+              class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2"
+              data-headlessui-state=""
+              type="button"
+            >
+              See Recipe
+              <svg
+                aria-hidden="true"
+                class="ml-2 h-5 w-5"
+                data-slot="icon"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <button
+              aria-label="Like recipe"
+              class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+              data-disabled=""
+              data-headlessui-state="disabled"
+              data-testid="like_button"
+              disabled=""
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="block h-6 w-6 text-gray-500"
+                data-slot="icon"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.493 18.5c-.425 0-.82-.236-.975-.632A7.48 7.48 0 0 1 6 15.125c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75A.75.75 0 0 1 15 2a2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23h-.777ZM2.331 10.727a11.969 11.969 0 0 0-.831 4.398 12 12 0 0 0 .52 3.507C2.28 19.482 3.105 20 3.994 20H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 0 1-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227Z"
+                />
+              </svg>
+              <span
+                class="tabular-nums"
+              >
+                1
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

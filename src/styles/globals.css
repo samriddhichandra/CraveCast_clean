@@ -1,0 +1,229 @@
+/*
+   Tailwind CSS Base, Components, and Utilities
+   These import Tailwind's default styles, utility classes, and components.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import modern font for headings */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/*
+   Root variables for cherry blossom theme colors
+   These define the foreground and background colors used throughout the app.
+*/
+:root {
+  --foreground-rgb: 0, 0, 0; /* Default text color */
+  --background-start-rgb: 253, 242, 248; /* Light pink background */
+  --background-end-rgb: 255, 255, 255; /* White background */
+  --cherry-blossom-pink: 236, 72, 153;
+  --blossom-shadow: 0 4px 20px rgba(236, 72, 153, 0.2);
+}
+
+/*
+   Dark mode theme variables (Currently commented out)
+   Uncomment if you want to support dark mode.
+*/
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+*/
+
+/*
+   Global body styles with cherry blossom theme
+   Sets the text color and background dynamically.
+*/
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(135deg, rgb(253, 242, 248) 0%, rgb(252, 231, 243) 50%, rgb(250, 209, 232) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/*
+   Tailwind utility extension with 3D effects and animations
+   Defines custom utility classes for the cherry blossom theme.
+*/
+@layer utilities {
+  .text-balance {
+    text-wrap: balance; /* Improves text readability by balancing line breaks */
+  }
+
+  /* z-index layers for consistent stacking across the app */
+  .z-overlay {
+    z-index: 10;
+  }
+  .z-header {
+    z-index: 50;
+  }
+  .z-modal {
+    z-index: 100;
+  }
+  .z-modal-top {
+    z-index: 150;
+  }
+
+  /* 3D transform utilities */
+  .transform-3d {
+    transform-style: preserve-3d;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  /* Cherry blossom themed shadows and effects */
+  .shadow-blossom {
+    box-shadow: var(--blossom-shadow);
+  }
+
+  .shadow-3d {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Floating animation for decorative elements */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Blossom falling animation */
+  .animate-blossom {
+    animation: blossom 4s ease-in-out infinite;
+  }
+
+  /* Pink glow effect */
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  /* 3D bounce effect */
+  .animate-bounce-3d {
+    animation: bounce3d 1s ease-in-out;
+  }
+
+  /* Cherry blossom background pattern */
+  .bg-blossom-pattern {
+    background-image: radial-gradient(circle at 20% 80%, rgba(255, 192, 203, 0.3) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
+                      radial-gradient(circle at 40% 40%, rgba(255, 218, 221, 0.3) 0%, transparent 50%);
+  }
+
+  /* Pink gradient backgrounds */
+  .bg-pink-gradient {
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fad1e8 100%);
+  }
+
+  .bg-cherry-blossom {
+    background: linear-gradient(135deg, #fce7f3 0%, #fad1e8 50%, #f8b4d9 100%);
+  }
+}
+
+/*
+   Global scrollbar behavior fix
+   Ensures that the scrollbar space remains reserved, preventing layout shifts
+   when elements like dropdowns or modals open.
+*/
+html {
+  scrollbar-gutter: stable; /* Prevents layout shift by reserving space for the scrollbar */
+}
+
+/*
+   Base heading styles for consistent hierarchy and spacing with cherry blossom theme
+*/
+@layer base {
+  h1 {
+    @apply text-3xl md:text-4xl font-bold mt-6 mb-4 text-pink-800;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 0 2px 4px rgba(236, 72, 153, 0.1);
+  }
+  h2 {
+    @apply text-2xl md:text-3xl font-semibold mt-6 mb-4 text-pink-700;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 0 2px 4px rgba(236, 72, 153, 0.1);
+  }
+  h3 {
+    @apply text-xl md:text-2xl font-semibold mt-4 mb-2 text-pink-600;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 0 2px 4px rgba(236, 72, 153, 0.1);
+  }
+
+  /* Cherry blossom themed buttons */
+  .btn-blossom {
+    @apply bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-lg shadow-blossom transform transition-all duration-200 hover:scale-105 hover:shadow-pink-glow;
+  }
+
+  .btn-blossom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
+  }
+
+  /* 3D card effect */
+  .card-3d {
+    @apply bg-white rounded-lg shadow-3d transform transition-all duration-300 hover:rotate-y-5 hover:scale-105;
+    transform-style: preserve-3d;
+  }
+
+  .card-3d:hover {
+    transform: rotateY(5deg) scale(1.05);
+  }
+
+  /* Floating elements */
+  .floating-element {
+    @apply animate-float;
+  }
+
+  /* Blossom decorative elements */
+  .blossom-petal {
+    @apply absolute w-2 h-2 bg-pink-300 rounded-full animate-blossom;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+}
+
+/* Keyframe animations for cherry blossom theme */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes blossom {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 192, 203, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 192, 203, 0.8);
+  }
+}
+
+@keyframes bounce3d {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateX(5deg);
+  }
+}
